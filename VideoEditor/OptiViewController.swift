@@ -117,13 +117,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //Collection view Cell NIB Identifier
-        collectnvw_Menu.register(UINib(nibName: Constant().CMenuCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CMenuCell)
-        effect_CollVw.register(UINib(nibName: Constant().CEffectCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CEffectCell)
-        speed_Collvw.register(UINib(nibName: Constant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CSpeedCell)
-        sticker_Collvw.register(UINib(nibName: Constant().CMenuCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CMenuCell)
-        transition_Collvw.register(UINib(nibName: Constant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CSpeedCell)
-        stickerPostion_Collvw.register(UINib(nibName: Constant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CSpeedCell)
-        textPosition_Collvw.register(UINib(nibName: Constant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: Constant().CSpeedCell)
+        collectnvw_Menu.register(UINib(nibName: OptiConstant().CMenuCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CMenuCell)
+        effect_CollVw.register(UINib(nibName: OptiConstant().CEffectCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CEffectCell)
+        speed_Collvw.register(UINib(nibName: OptiConstant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CSpeedCell)
+        sticker_Collvw.register(UINib(nibName: OptiConstant().CMenuCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CMenuCell)
+        transition_Collvw.register(UINib(nibName: OptiConstant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CSpeedCell)
+        stickerPostion_Collvw.register(UINib(nibName: OptiConstant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CSpeedCell)
+        textPosition_Collvw.register(UINib(nibName: OptiConstant().CSpeedCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CSpeedCell)
         
         self.mergeView.isHidden = true
         self.effect_Vw.isHidden = true
@@ -260,7 +260,7 @@ class ViewController: UIViewController {
     
     @objc func saveActionforEditedVideo() {
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: "Video Editor", message: Constant().savevideo, preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Video Editor", message: OptiConstant().savevideo, preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default, handler: { action in
                 if let videourl = self.slctVideoUrl {
                     let getalbum = UserDefaults.standard.bool(forKey: "AlbumCreated")
@@ -268,9 +268,9 @@ class ViewController: UIViewController {
                         OptiVideoEditor().save(videoUrl: videourl, toAlbum: "Video Editor", completionHandler: { (saved, error) in
                             DispatchQueue.main.async {
                                 if saved {
-                                    Toast.showPositiveMessage(message: Constant().videosaved)
+                                    OptiToast.showPositiveMessage(message: OptiConstant().videosaved)
                                 }else {
-                                    Toast.showNegativeMessage(message: error?.localizedDescription ?? "")
+                                    OptiToast.showNegativeMessage(message: error?.localizedDescription ?? "")
                                 }
                             }
                         })
@@ -279,9 +279,9 @@ class ViewController: UIViewController {
                             OptiVideoEditor().save(videoUrl: videourl, toAlbum: "Video Editor", completionHandler: { (saved, error) in
                                 DispatchQueue.main.async {
                                     if saved {
-                                        Toast.showPositiveMessage(message: Constant().videosaved)
+                                        OptiToast.showPositiveMessage(message: OptiConstant().videosaved)
                                     }else {
-                                        Toast.showNegativeMessage(message: error?.localizedDescription ?? "")
+                                        OptiToast.showNegativeMessage(message: error?.localizedDescription ?? "")
                                     }
                                 }
                             })
@@ -325,7 +325,7 @@ class ViewController: UIViewController {
         videoPickerController.delegate = self
         if UIImagePickerController.isSourceTypeAvailable(.camera) == false {
             DispatchQueue.main.async {
-                Toast.showNegativeMessage(message: Constant().cameranotavailable)
+                OptiToast.showNegativeMessage(message: OptiConstant().cameranotavailable)
             }
             return
         }
@@ -379,13 +379,13 @@ class ViewController: UIViewController {
                     }
                 }) { (error) in
                     DispatchQueue.main.async {
-                        Toast.showNegativeMessage(message: error ?? "")
+                        OptiToast.showNegativeMessage(message: error ?? "")
                         self.progressvw_back.isHidden = true
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    Toast.showNegativeMessage(message: Constant().select2video)
+                    OptiToast.showNegativeMessage(message: OptiConstant().select2video)
                 }
             }
         } else {
@@ -411,7 +411,7 @@ class ViewController: UIViewController {
                             }
                         }) { (error) in
                             DispatchQueue.main.async {
-                                Toast.showNegativeMessage(message: error ?? "")
+                                OptiToast.showNegativeMessage(message: error ?? "")
                                 self.progressvw_back.isHidden = true
                             }
                         }
@@ -440,7 +440,7 @@ class ViewController: UIViewController {
                             }
                         }) { (error) in
                             DispatchQueue.main.async {
-                                Toast.showNegativeMessage(message: error ?? "")
+                                OptiToast.showNegativeMessage(message: error ?? "")
                                 self.progressvw_back.isHidden = true
                             }
                         }
@@ -468,17 +468,17 @@ class ViewController: UIViewController {
                             }
                         }){ (error) in
                             DispatchQueue.main.async {
-                                Toast.showNegativeMessage(message: error ?? "")
+                                OptiToast.showNegativeMessage(message: error ?? "")
                                 self.progressvw_back.isHidden = true
                             }
                         }
                     }else if txtfld_Addtxt.text == "" {
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().addtext)
+                            OptiToast.showNegativeMessage(message: OptiConstant().addtext)
                         }
                     } else if selectedTextPosition == -1 {
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctpositionfrtxt)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctpositionfrtxt)
                         }
                     }
                     
@@ -507,18 +507,18 @@ class ViewController: UIViewController {
                             }
                         }){ (error) in
                             DispatchQueue.main.async {
-                                Toast.showNegativeMessage(message: error ?? "")
+                                OptiToast.showNegativeMessage(message: error ?? "")
                                 self.progressvw_back.isHidden = true
                             }
                         }
                     }else if strSelectedSticker == "" {
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slcttsticker)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slcttsticker)
                         }
                         
                     } else if selectedStickerPosition == -1  {
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctpositonfrsticker)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctpositonfrsticker)
                         }
                     }
                     
@@ -545,7 +545,7 @@ class ViewController: UIViewController {
                         }
                     }){ (error) in
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: error ?? "")
+                            OptiToast.showNegativeMessage(message: error ?? "")
                             self.progressvw_back.isHidden = true
                         }
                     }
@@ -572,7 +572,7 @@ class ViewController: UIViewController {
                         }
                     }) { (error) in
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: error ?? "")
+                            OptiToast.showNegativeMessage(message: error ?? "")
                             self.progressvw_back.isHidden = true
 
                         }
@@ -627,7 +627,7 @@ class ViewController: UIViewController {
                                 }
                             }) { (error) in
                                 DispatchQueue.main.async {
-                                    Toast.showNegativeMessage(message: error ?? "")
+                                    OptiToast.showNegativeMessage(message: error ?? "")
                                     self.progressvw_back.isHidden = true
                                 }
                             }
@@ -635,14 +635,14 @@ class ViewController: UIViewController {
                     }
                 }else{
                     DispatchQueue.main.async {
-                        Toast.showNegativeMessage(message: Constant().cropaudioduration)
+                        OptiToast.showNegativeMessage(message: OptiConstant().cropaudioduration)
                         self.progressvw_back.isHidden = true
                     }
                 }
                 
             }) { (error) in
                 DispatchQueue.main.async {
-                    Toast.showNegativeMessage(message: error ?? "")
+                    OptiToast.showNegativeMessage(message: error ?? "")
                     self.progressvw_back.isHidden = true
                 }
             }
@@ -686,7 +686,7 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
                     self.cropSlidervw.upperValue = self.videoTotalsec
                 }else{
                     DispatchQueue.main.async {
-                        Toast.showNegativeMessage(message: Constant().withinthree)
+                        OptiToast.showNegativeMessage(message: OptiConstant().withinthree)
                     }
                 }
                 
@@ -727,11 +727,11 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView.tag {
         case 1:
-            let cell: CollectionViewMenuCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CMenuCell, for: indexPath) as! CollectionViewMenuCell
+            let cell: CollectionViewMenuCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CMenuCell, for: indexPath) as! CollectionViewMenuCell
             cell.imgvw_Menu.image = UIImage(named:menuItems[indexPath.row])
             return cell
         case 2:
-            let cell: EffectCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CEffectCell, for: indexPath) as! EffectCollectionCell
+            let cell: EffectCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CEffectCell, for: indexPath) as! EffectCollectionCell
             cell.lbl_effectName.text = filterNames[indexPath.row]
             if let convertImage = thumImg {
                 cell.effect_Imgvw.image = OptiVideoEditor().convertImageToBW(filterName: CIFilterNames[indexPath.row], image: convertImage)
@@ -748,7 +748,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             
             return cell
         case 3:
-            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
+            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
             cell.lbl_speedsec.text = "\(speedItems[indexPath.row])s"
             if strSelectedSpeed == speedItems[indexPath.row] {
                 cell.lbl_speedsec.textColor = UIColor.black
@@ -761,7 +761,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             }
             return cell
         case 4:
-            let cell: CollectionViewMenuCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CMenuCell, for: indexPath) as! CollectionViewMenuCell
+            let cell: CollectionViewMenuCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CMenuCell, for: indexPath) as! CollectionViewMenuCell
             if strSelectedSticker == "sticker\(indexPath.row + 1)" {
                 cell.backgroundColor = UIColor.white
                 cell.cornerRadius = 5.0
@@ -773,7 +773,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             cell.imgvw_Menu.image = UIImage(named:"sticker\(indexPath.row + 1)")
             return cell
         case 5:
-            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
+            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
             cell.lbl_speedsec.text = "\(transitionItems[indexPath.row])"
             if selectedTransitionType == indexPath.row {
                 cell.lbl_speedsec.textColor = UIColor.black
@@ -786,7 +786,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             }
             return cell
         case 6:
-            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
+            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
             cell.lbl_speedsec.text = "\(positionItems[indexPath.row])"
             if selectedStickerPosition == indexPath.row {
                 cell.lbl_speedsec.textColor = UIColor.black
@@ -799,7 +799,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             }
             return cell
         case 7:
-            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
+            let cell: SpeedCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: OptiConstant().CSpeedCell, for: indexPath) as! SpeedCollectionCell
             cell.lbl_speedsec.text = "\(positionItems[indexPath.row])"
             if selectedTextPosition == indexPath.row {
                 cell.lbl_speedsec.textColor = UIColor.black
@@ -917,7 +917,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideofilter)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideofilter)
                         }
                     }
                 case 1:
@@ -939,7 +939,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideocrop)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideocrop)
                         }
                     }
                 case 2:
@@ -961,7 +961,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideomergeaudio)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideomergeaudio)
                         }
                     }
                 case 3:
@@ -984,7 +984,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideospeed)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideospeed)
                         }
                     }
                 case 4:
@@ -1007,7 +1007,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideoaddtxt)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideoaddtxt)
                         }
                     }
                 case 5:
@@ -1030,7 +1030,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     }else{
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideosticker)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideosticker)
                         }
                     }
                 case 6:
@@ -1056,7 +1056,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.vw_function.layoutIfNeeded()
                     }, completion: nil)
                     //                } else {
-                    //                    Toast.showNegativeMessage(message: Constant().slctvideomerge)
+                    //                    OptiToast.showNegativeMessage(message: OptiConstant().slctvideomerge)
                 //                }
                 case 7:
                     // addTransitionView
@@ -1078,7 +1078,7 @@ extension ViewController : UICollectionViewDelegate {
                         
                     } else {
                         DispatchQueue.main.async {
-                            Toast.showNegativeMessage(message: Constant().slctvideotransition)
+                            OptiToast.showNegativeMessage(message: OptiConstant().slctvideotransition)
                         }
                     }
                     
@@ -1129,7 +1129,7 @@ extension ViewController : UICollectionViewDelegate {
             }
         } else {
             DispatchQueue.main.async {
-                Toast.showNegativeMessage(message: Constant().anotheraction)
+                OptiToast.showNegativeMessage(message: OptiConstant().anotheraction)
             }
         }
     }
@@ -1145,7 +1145,7 @@ extension ViewController: MPMediaPickerControllerDelegate {
             let url = song.value(forProperty: MPMediaItemPropertyAssetURL) as? URL
             self.audioAsset = (url == nil) ? nil : AVAsset(url: url!)
             let message = (url == nil) ? "Audio Not Loaded" : "Audio Loaded"
-            Toast.showNegativeMessage(message: message)
+            OptiToast.showNegativeMessage(message: message)
         }
     }
     

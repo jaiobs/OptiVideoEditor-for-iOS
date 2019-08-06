@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		58105A3E2254C43F00145032 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58105A3D2254C43F00145032 /* AppDelegate.swift */; };
-		58105A402254C43F00145032 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58105A3F2254C43F00145032 /* ViewController.swift */; };
+		58105A3E2254C43F00145032 /* OptiAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58105A3D2254C43F00145032 /* OptiAppDelegate.swift */; };
+		58105A402254C43F00145032 /* OptiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58105A3F2254C43F00145032 /* OptiViewController.swift */; };
 		58105A432254C43F00145032 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58105A412254C43F00145032 /* Main.storyboard */; };
 		58105A452254C45000145032 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58105A442254C45000145032 /* Assets.xcassets */; };
 		58105A482254C45000145032 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58105A462254C45000145032 /* LaunchScreen.storyboard */; };
-		6C8C8C3F22C228A5003E648E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C3E22C228A5003E648E /* Constant.swift */; };
+		6C8C8C3F22C228A5003E648E /* OptiConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C3E22C228A5003E648E /* OptiConstant.swift */; };
 		6C8C8C4422C22C43003E648E /* CollectionViewMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4222C22C43003E648E /* CollectionViewMenuCell.swift */; };
 		6C8C8C4522C22C43003E648E /* CollectionViewMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4322C22C43003E648E /* CollectionViewMenuCell.xib */; };
 		6C8C8C4822C23061003E648E /* OptiVideoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4722C23061003E648E /* OptiVideoEditor.swift */; };
 		6C8C8C4D22C25D10003E648E /* EffectCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4B22C25D10003E648E /* EffectCollectionCell.swift */; };
 		6C8C8C4E22C25D10003E648E /* EffectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4C22C25D10003E648E /* EffectCollectionCell.xib */; };
 		6C962C2422BA195300492712 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C962C2322BA195300492712 /* AVFoundation.framework */; };
-		6C9630E922F3FF7100BF3C7D /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9630E822F3FF7100BF3C7D /* Toast.swift */; };
+		6C9630E922F3FF7100BF3C7D /* OptiToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9630E822F3FF7100BF3C7D /* OptiToast.swift */; };
 		6C9DCBE422C34F9F00890F6D /* SpeedCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DCBE222C34F9F00890F6D /* SpeedCollectionCell.swift */; };
 		6C9DCBE522C34F9F00890F6D /* SpeedCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C9DCBE322C34F9F00890F6D /* SpeedCollectionCell.xib */; };
 		6C9DCBE822C34FCF00890F6D /* StickerCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DCBE622C34FCF00890F6D /* StickerCollectionCell.swift */; };
@@ -28,7 +28,7 @@
 		6C9F49B622C20C0B0054802A /* Maple-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C9F49B222C20C0B0054802A /* Maple-Regular.otf */; };
 		6C9F49B722C20C0B0054802A /* Maple-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C9F49B322C20C0B0054802A /* Maple-Medium.otf */; };
 		6C9F49B822C20C0B0054802A /* Maple-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6C9F49B422C20C0B0054802A /* Maple-Bold.otf */; };
-		6C9F49BB22C21B480054802A /* Designable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9F49BA22C21B480054802A /* Designable.swift */; };
+		6C9F49BB22C21B480054802A /* OptiDesignable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9F49BA22C21B480054802A /* OptiDesignable.swift */; };
 		6CB1032222BB943E00E9237A /* OptiRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1032022BB943D00E9237A /* OptiRangeSlider.swift */; };
 		6CB1032322BB943E00E9237A /* OptiRangeSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB1032122BB943E00E9237A /* OptiRangeSliderView.swift */; };
 		6CCF0E7C22B8BF5700188246 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CCF0E7B22B8BF5700188246 /* QuartzCore.framework */; };
@@ -36,20 +36,20 @@
 
 /* Begin PBXFileReference section */
 		58105A3A2254C43F00145032 /* VideoEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		58105A3D2254C43F00145032 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		58105A3F2254C43F00145032 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		58105A3D2254C43F00145032 /* OptiAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiAppDelegate.swift; sourceTree = "<group>"; };
+		58105A3F2254C43F00145032 /* OptiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiViewController.swift; sourceTree = "<group>"; };
 		58105A422254C43F00145032 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		58105A442254C45000145032 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58105A472254C45000145032 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58105A492254C45000145032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6C8C8C3E22C228A5003E648E /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		6C8C8C3E22C228A5003E648E /* OptiConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiConstant.swift; sourceTree = "<group>"; };
 		6C8C8C4222C22C43003E648E /* CollectionViewMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewMenuCell.swift; sourceTree = "<group>"; };
 		6C8C8C4322C22C43003E648E /* CollectionViewMenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewMenuCell.xib; sourceTree = "<group>"; };
 		6C8C8C4722C23061003E648E /* OptiVideoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiVideoEditor.swift; sourceTree = "<group>"; };
 		6C8C8C4B22C25D10003E648E /* EffectCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCollectionCell.swift; sourceTree = "<group>"; };
 		6C8C8C4C22C25D10003E648E /* EffectCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EffectCollectionCell.xib; sourceTree = "<group>"; };
 		6C962C2322BA195300492712 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		6C9630E822F3FF7100BF3C7D /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		6C9630E822F3FF7100BF3C7D /* OptiToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiToast.swift; sourceTree = "<group>"; };
 		6C9DCBE222C34F9F00890F6D /* SpeedCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedCollectionCell.swift; sourceTree = "<group>"; };
 		6C9DCBE322C34F9F00890F6D /* SpeedCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpeedCollectionCell.xib; sourceTree = "<group>"; };
 		6C9DCBE622C34FCF00890F6D /* StickerCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerCollectionCell.swift; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		6C9F49B222C20C0B0054802A /* Maple-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maple-Regular.otf"; sourceTree = "<group>"; };
 		6C9F49B322C20C0B0054802A /* Maple-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maple-Medium.otf"; sourceTree = "<group>"; };
 		6C9F49B422C20C0B0054802A /* Maple-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maple-Bold.otf"; sourceTree = "<group>"; };
-		6C9F49BA22C21B480054802A /* Designable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Designable.swift; sourceTree = "<group>"; };
+		6C9F49BA22C21B480054802A /* OptiDesignable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiDesignable.swift; sourceTree = "<group>"; };
 		6CB1032022BB943D00E9237A /* OptiRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptiRangeSlider.swift; sourceTree = "<group>"; };
 		6CB1032122BB943E00E9237A /* OptiRangeSliderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptiRangeSliderView.swift; sourceTree = "<group>"; };
 		6CCF0E7B22B8BF5700188246 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -104,8 +104,8 @@
 				6C8C8C4022C22A41003E648E /* Constant */,
 				6C9F49B922C20F390054802A /* Custome Slider */,
 				6C8C8C4122C22C05003E648E /* CollectionViewCell */,
-				58105A3D2254C43F00145032 /* AppDelegate.swift */,
-				58105A3F2254C43F00145032 /* ViewController.swift */,
+				58105A3D2254C43F00145032 /* OptiAppDelegate.swift */,
+				58105A3F2254C43F00145032 /* OptiViewController.swift */,
 				58105A412254C43F00145032 /* Main.storyboard */,
 				58105A442254C45000145032 /* Assets.xcassets */,
 				58105A462254C45000145032 /* LaunchScreen.storyboard */,
@@ -117,7 +117,7 @@
 		6C8C8C4022C22A41003E648E /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				6C8C8C3E22C228A5003E648E /* Constant.swift */,
+				6C8C8C3E22C228A5003E648E /* OptiConstant.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -148,7 +148,7 @@
 		6C8C8C4A22C242ED003E648E /* Extension&Designable */ = {
 			isa = PBXGroup;
 			children = (
-				6C9F49BA22C21B480054802A /* Designable.swift */,
+				6C9F49BA22C21B480054802A /* OptiDesignable.swift */,
 			);
 			path = "Extension&Designable";
 			sourceTree = "<group>";
@@ -156,7 +156,7 @@
 		6C9630E722F3FF3200BF3C7D /* Toast */ = {
 			isa = PBXGroup;
 			children = (
-				6C9630E822F3FF7100BF3C7D /* Toast.swift */,
+				6C9630E822F3FF7100BF3C7D /* OptiToast.swift */,
 			);
 			path = Toast;
 			sourceTree = "<group>";
@@ -269,15 +269,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C9630E922F3FF7100BF3C7D /* Toast.swift in Sources */,
+				6C9630E922F3FF7100BF3C7D /* OptiToast.swift in Sources */,
 				6C9DCBE422C34F9F00890F6D /* SpeedCollectionCell.swift in Sources */,
-				6C9F49BB22C21B480054802A /* Designable.swift in Sources */,
+				6C9F49BB22C21B480054802A /* OptiDesignable.swift in Sources */,
 				6C8C8C4D22C25D10003E648E /* EffectCollectionCell.swift in Sources */,
-				6C8C8C3F22C228A5003E648E /* Constant.swift in Sources */,
+				6C8C8C3F22C228A5003E648E /* OptiConstant.swift in Sources */,
 				6CB1032222BB943E00E9237A /* OptiRangeSlider.swift in Sources */,
-				58105A402254C43F00145032 /* ViewController.swift in Sources */,
+				58105A402254C43F00145032 /* OptiViewController.swift in Sources */,
 				6C8C8C4822C23061003E648E /* OptiVideoEditor.swift in Sources */,
-				58105A3E2254C43F00145032 /* AppDelegate.swift in Sources */,
+				58105A3E2254C43F00145032 /* OptiAppDelegate.swift in Sources */,
 				6CB1032322BB943E00E9237A /* OptiRangeSliderView.swift in Sources */,
 				6C9DCBE822C34FCF00890F6D /* StickerCollectionCell.swift in Sources */,
 				6C8C8C4422C22C43003E648E /* CollectionViewMenuCell.swift in Sources */,

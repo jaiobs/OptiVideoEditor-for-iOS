@@ -1,5 +1,5 @@
 //
-//  Constant.swift
+//  OptiConstant.swift
 //  VideoEditor
 //
 //  Created by Optisol on 21/07/19.
@@ -34,7 +34,7 @@ var CIFilterNames = [
     "CINoiseReduction"
 ]
 
-class Constant: NSObject {
+class OptiConstant: NSObject {
     
     //MARK: Cell Identifier
     public let CMenuCell: String      = "CollectionViewMenuCell"

@@ -1,5 +1,5 @@
 //
-//  Toast.swift
+//  OptiToast.swift
 //  VideoEditor
 //
 //  Created by Optisol on 21/07/19.
@@ -10,7 +10,7 @@
 import Foundation
 import UIKit
 
-class Toast {
+class OptiToast {
     
     class private func showAlert(backgroundColor:UIColor, textColor:UIColor, message:String)
     {

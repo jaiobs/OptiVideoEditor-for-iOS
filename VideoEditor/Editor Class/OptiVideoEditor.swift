@@ -601,7 +601,7 @@ class OptiVideoEditor: NSObject {
         } else if text != "" {
             let textLayer = CATextLayer()
             textLayer.string = text
-            textLayer.font = UIFont(name: "Maple-Regular.otf", size: 25) ?? UIFont.systemFont(ofSize: 25)
+            textLayer.font = UIFont(name: "Maple-Regular.otf", size: 40) ?? UIFont.systemFont(ofSize: 40)
             
             if position % 3 == 0 {
                 textLayer.alignmentMode = CATextLayerAlignmentMode.left
@@ -611,11 +611,11 @@ class OptiVideoEditor: NSObject {
                 textLayer.alignmentMode = CATextLayerAlignmentMode.right
             }
             
-            let textWidth = videoWidth / 6
+            let textWidth = videoWidth / 5
             let textX = videoWidth * CGFloat(5 * (position % 3)) / 12
             let textY = videoHeight * CGFloat(position / 3) / 3
             textLayer.frame = CGRect(x: textX , y: textY + 20, width: textWidth, height: 50)
-            textLayer.opacity = 0.7
+            textLayer.opacity = 0.6
             parentLayer.addSublayer(textLayer)
         }
         
@@ -798,7 +798,7 @@ class OptiVideoEditor: NSObject {
             let thumbnail = UIImage(cgImage: cgImage)
             return thumbnail
         } catch let error {
-            Toast.showNegativeMessage(message: error.localizedDescription)
+            OptiToast.showNegativeMessage(message: error.localizedDescription)
             return nil
         }
     }
