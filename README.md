@@ -1,4 +1,4 @@
-# VideoEditor-for-iOS
+# OptiVideoEditor-for-iOS
 
 # About 
 
