@@ -51,6 +51,7 @@ class OptiVideoEditor: NSObject {
             
         })
         
+        //export the video to as per your requirement conversion
         guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else { return }
         exportSession.outputFileType = AVFileType.mov
         exportSession.outputURL = outputURL
@@ -93,6 +94,7 @@ class OptiVideoEditor: NSObject {
         //Remove existing file
         self.deleteFile(outputURL)
         
+        //export the video to as per your requirement conversion
         guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else { return }
         exportSession.outputURL = outputURL
         exportSession.outputFileType = .mp4
@@ -129,9 +131,6 @@ class OptiVideoEditor: NSObject {
         
         if compatiblePresets.contains(AVAssetExportPresetMediumQuality) {
             
-            guard let exportSession = AVAssetExportSession(asset: asset,
-                                                           presetName: AVAssetExportPresetAppleM4A) else{return}
-            
             //Create Directory path for Save
             let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             var outputURL = documentDirectory.appendingPathComponent("TrimAudio")
@@ -145,6 +144,8 @@ class OptiVideoEditor: NSObject {
             //Remove existing file
             self.deleteFile(outputURL)
             
+            //export the audio to as per your requirement conversion
+            guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else{return}
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.m4a
             
@@ -241,6 +242,7 @@ class OptiVideoEditor: NSObject {
             //Remove existing file
             self.deleteFile(outputURL)
             
+            //export the video to as per your requirement conversion
             if let exportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) {
                 exportSession.outputURL = outputURL
                 exportSession.outputFileType = AVFileType.mp4
@@ -322,6 +324,7 @@ class OptiVideoEditor: NSObject {
         //Remove existing file
         self.deleteFile(outputURL)
         
+        //export the video to as per your requirement conversion
         if let exportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.mp4
@@ -382,6 +385,7 @@ class OptiVideoEditor: NSObject {
         //Remove existing file
         self.deleteFile(outputURL)
         
+        //export the video to as per your requirement conversion
         if let exportSession = AVAssetExportSession(asset: mainComposition, presetName: AVAssetExportPresetHighestQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.mp4
@@ -539,6 +543,7 @@ class OptiVideoEditor: NSObject {
         //Remove existing file
         self.deleteFile(outputURL)
         
+        //export the video to as per your requirement conversion
         if let exportSession = AVAssetExportSession(asset: mixComposition, presetName: AVAssetExportPresetHighestQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.mp4
@@ -649,6 +654,7 @@ class OptiVideoEditor: NSObject {
         //Remove existing file
         self.deleteFile(outputURL)
         
+        //export the video to as per your requirement conversion
         if let exportSession = AVAssetExportSession(asset: mutableComposition, presetName: AVAssetExportPresetHighestQuality) {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.mov
@@ -795,6 +801,22 @@ class OptiVideoEditor: NSObject {
             Toast.showNegativeMessage(message: error.localizedDescription)
             return nil
         }
+    }
+    //MARK : add filter to video placeholder image
+    func convertImageToBW(filterName : String ,image:UIImage) -> UIImage {
+        
+        let filter = CIFilter(name: filterName)
+        
+        // convert UIImage to CIImage and set as input
+        let ciInput = CIImage(image: image)
+        filter?.setValue(ciInput, forKey: "inputImage")
+        
+        // get output CIImage, render as CGImage first to retain proper UIImage scale
+        let ciOutput = filter?.outputImage
+        let ciContext = CIContext()
+        let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
+        
+        return UIImage(cgImage: cgImage!)
     }
     //MARK : Create album inside photos library
     func createAlbum(withTitle title: String, completionHandler: @escaping (PHAssetCollection?) -> ()) {

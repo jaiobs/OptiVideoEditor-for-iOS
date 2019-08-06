@@ -68,7 +68,7 @@ class Constant: NSObject {
     public let videosaved: String            = "Your video was successfully saved"
     public let savevideo: String             = "Would you like to save your edited video?"
     public let anotheraction: String         = "Another video editor action is processing so it can't be process new action, please wait"
-    public let withinthree: String           = "Please select video duration within 3 minits"
+    public let withinthree: String           = "Please select video duration within 4 minits"
 
 
 }

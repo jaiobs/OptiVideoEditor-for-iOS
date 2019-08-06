@@ -232,22 +232,7 @@ class ViewController: UIViewController {
         self.avplayer.play()
     }
     
-    //MARK :
-    func convertImageToBW(filterName : String ,image:UIImage) -> UIImage {
-        
-        let filter = CIFilter(name: filterName)
-        
-        // convert UIImage to CIImage and set as input
-        let ciInput = CIImage(image: image)
-        filter?.setValue(ciInput, forKey: "inputImage")
-        
-        // get output CIImage, render as CGImage first to retain proper UIImage scale
-        let ciOutput = filter?.outputImage
-        let ciContext = CIContext()
-        let cgImage = ciContext.createCGImage(ciOutput!, from: (ciOutput?.extent)!)
-        
-        return UIImage(cgImage: cgImage!)
-    }
+    
     
     //MARK: Objc method Actions
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -464,11 +449,11 @@ class ViewController: UIViewController {
             }else if vw_AddTextView.isHidden == false {
                 self.avplayer.pause()
                 if let videourl = self.slctVideoUrl {
-                    UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
-                        self.vw_function.layoutIfNeeded()
-                    }, completion: nil)
                     if selectedTextPosition != -1 && txtfld_Addtxt.text != "" {
+                        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
+                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.vw_function.layoutIfNeeded()
+                        }, completion: nil)
                         self.progressvw_back.isHidden = false
                         self.progress_Vw.progress = 0.1
                         self.setTimer()
@@ -502,11 +487,11 @@ class ViewController: UIViewController {
             } else if sticker_Vw.isHidden == false {
                 self.avplayer.pause()
                 if let videourl = self.slctVideoUrl {
-                    UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
-                        self.vw_function.layoutIfNeeded()
-                    }, completion: nil)
                     if selectedStickerPosition != -1 && strSelectedSticker != "" {
+                        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
+                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.vw_function.layoutIfNeeded()
+                        }, completion: nil)
                         self.progressvw_back.isHidden = false
                         self.progress_Vw.progress = 0.1
                         self.setTimer()
@@ -692,7 +677,7 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
                 let asset = AVAsset(url: videourl)
                 let duration = asset.duration
                 let durationTime = CMTimeGetSeconds(duration)
-                if (durationTime / 60) < 3.0 {
+                if (durationTime / 60) < 4.0 {
                     self.slctVideoUrl = videoURL
                     self.thumImg = OptiVideoEditor().generateThumbnail(path: videourl)
                     videoTotalsec = durationTime
@@ -749,7 +734,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
             let cell: EffectCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant().CEffectCell, for: indexPath) as! EffectCollectionCell
             cell.lbl_effectName.text = filterNames[indexPath.row]
             if let convertImage = thumImg {
-                cell.effect_Imgvw.image = self.convertImageToBW(filterName: CIFilterNames[indexPath.row], image: convertImage)
+                cell.effect_Imgvw.image = OptiVideoEditor().convertImageToBW(filterName: CIFilterNames[indexPath.row], image: convertImage)
             }
             cell.effect_Imgvw.layer.borderWidth = 2
             
