@@ -1,2 +1,17 @@
 # VideoEditor-for-iOS
-Native Video editor : Video trim, Audio, Video merge, Slow and fast motion, Video transition, Text and image, Filters, etc...
+
+Features
+
+. Video trim
+
+. Audio
+
+. Video merge
+
+. Slow and fast motion
+
+. Video transition
+
+. Text and image
+
+. Filters
