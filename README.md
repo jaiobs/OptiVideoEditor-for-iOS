@@ -1,19 +1,25 @@
 # OptiVideoEditor-for-iOS
 
 ## About 
+![Image of Yaktocat](https://raw.githubusercontent.com/jaiobs/OptiVideoEditor-for-iOS/master/ScreenShots/AddImage.png)
+![Image of Yaktocat](https://raw.githubusercontent.com/jaiobs/OptiVideoEditor-for-iOS/master/ScreenShots/AddMusic.png)
+![Image of Yaktocat](https://raw.githubusercontent.com/jaiobs/OptiVideoEditor-for-iOS/master/ScreenShots/MergeVideo.png)
+![Image of Yaktocat](https://raw.githubusercontent.com/jaiobs/OptiVideoEditor-for-iOS/master/ScreenShots/SlowFastMotion.png)
+
+
 
 ## Features
 
-##### . Video trim
+- ##### Video trim
 
-##### . Audio
+- ##### Audio
 
-##### . Video merge
+- ##### Video merge
 
-##### . Slow and fast motion
+- ##### Slow and fast motion
 
-##### . Video transition
+- ##### Video transition
 
-##### . Text and image
+- ##### Text and image
 
-##### . Filters
+- ##### Filters
