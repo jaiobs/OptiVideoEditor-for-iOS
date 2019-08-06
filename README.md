@@ -1,19 +1,23 @@
 # OptiVideoEditor-for-iOS
 
-# About 
+## About 
 
-# Features
 
-. Video trim
 
-. Audio
 
-. Video merge
 
-. Slow and fast motion
+## Features
 
-. Video transition
+##### . Video trim
 
-. Text and image
+##### . Audio
 
-. Filters
+##### . Video merge
+
+##### . Slow and fast motion
+
+##### . Video transition
+
+##### . Text and image
+
+##### . Filters
