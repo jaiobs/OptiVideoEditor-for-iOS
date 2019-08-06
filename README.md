@@ -1,6 +1,8 @@
 # VideoEditor-for-iOS
 
-Features
+# About 
+
+# Features
 
 . Video trim
 
