@@ -2,10 +2,6 @@
 
 ## About 
 
-
-
-
-
 ## Features
 
 ##### . Video trim
