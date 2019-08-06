@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Maple-Bold.otf">
+            <string>Maple-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SpeedCollectionCell" id="gTV-IL-0wX" customClass="SpeedCollectionCell" customModule="VideoEditing" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TsZ-cx-x4T">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12S-ce-jKy">
+                                <rect key="frame" x="5" y="10" width="40" height="30"/>
+                                <fontDescription key="fontDescription" name="Maple-Bold" family="Maple" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="12S-ce-jKy" secondAttribute="bottom" constant="10" id="L5I-Fx-gVE"/>
+                            <constraint firstAttribute="trailing" secondItem="12S-ce-jKy" secondAttribute="trailing" constant="5" id="Mez-em-jir"/>
+                            <constraint firstItem="12S-ce-jKy" firstAttribute="top" secondItem="TsZ-cx-x4T" secondAttribute="top" constant="10" id="uUB-m0-tec"/>
+                            <constraint firstItem="12S-ce-jKy" firstAttribute="leading" secondItem="TsZ-cx-x4T" secondAttribute="leading" constant="5" id="utO-uE-Ym5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="TsZ-cx-x4T" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="4z9-dy-oR4"/>
+                <constraint firstItem="TsZ-cx-x4T" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="R5Z-iM-rTs"/>
+                <constraint firstAttribute="trailing" secondItem="TsZ-cx-x4T" secondAttribute="trailing" id="btc-h0-Z43"/>
+                <constraint firstAttribute="bottom" secondItem="TsZ-cx-x4T" secondAttribute="bottom" id="q8Q-dS-qet"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="lbl_speedsec" destination="12S-ce-jKy" id="TKM-ks-imR"/>
+                <outlet property="vw_back" destination="TsZ-cx-x4T" id="OF3-JG-NhP"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>
