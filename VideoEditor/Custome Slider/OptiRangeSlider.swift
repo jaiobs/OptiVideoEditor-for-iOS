@@ -108,6 +108,8 @@ public class RangeSliderThumbLayer: CALayer {
 open class OptiRangeSlider: UIControl {
     
     //MARK: properties
+    @IBInspectable var lowerLayerSelected = Bool()
+
     
     /// minimum value
     @IBInspectable open var minimumValue: Double = 0.0 {
@@ -345,10 +347,13 @@ open class OptiRangeSlider: UIControl {
         // set highlighted positions for lower and upper thumbs
         if lowerThumbLayer.frame.contains(previouslocation) {
             lowerThumbLayer.highlighted = true
+            lowerLayerSelected = lowerThumbLayer.highlighted
+
         }
         
         if upperThumbLayer.frame.contains(previouslocation) {
             upperThumbLayer.highlighted = true
+            lowerLayerSelected = lowerThumbLayer.highlighted
         }
         
         return lowerThumbLayer.highlighted || upperThumbLayer.highlighted

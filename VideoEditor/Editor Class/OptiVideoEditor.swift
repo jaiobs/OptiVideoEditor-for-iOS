@@ -76,9 +76,10 @@ class OptiVideoEditor: NSObject {
     
     //MARK: crop the video which you select portion
     func trimVideo(sourceURL: URL, startTime: Double, endTime: Double, success: @escaping ((URL) -> Void), failure: @escaping ((String?) -> Void)) {
+        
         /// Asset
         let asset = AVAsset(url: sourceURL)
-//        let length = Float(asset.duration.value) / Float(asset.duration.timescale)
+        _ = Float(asset.duration.value) / Float(asset.duration.timescale)
 //        print("video length: \(length) seconds")
         
         //Create Directory path for Save
@@ -98,10 +99,7 @@ class OptiVideoEditor: NSObject {
         guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else { return }
         exportSession.outputURL = outputURL
         exportSession.outputFileType = .mp4
-        
-        let timeRange = CMTimeRange(start: CMTime(seconds: startTime, preferredTimescale: 1000),
-                                    end: CMTime(seconds: endTime, preferredTimescale: 1000))
-        
+        let timeRange = CMTimeRange(start: CMTime(seconds: startTime, preferredTimescale: asset.duration.timescale),end: CMTime(seconds: endTime, preferredTimescale: asset.duration.timescale))
         exportSession.timeRange = timeRange
         exportSession.exportAsynchronously(completionHandler: {
             switch exportSession.status {
@@ -149,9 +147,7 @@ class OptiVideoEditor: NSObject {
             exportSession.outputURL = outputURL
             exportSession.outputFileType = AVFileType.m4a
             
-            let start: CMTime = CMTimeMakeWithSeconds(startTime, preferredTimescale: asset.duration.timescale)
-            let stop: CMTime = CMTimeMakeWithSeconds(stopTime, preferredTimescale: asset.duration.timescale)
-            let range: CMTimeRange = CMTimeRangeFromTimeToTime(start: start, end: stop)
+            let range: CMTimeRange = CMTimeRangeFromTimeToTime(start: CMTimeMakeWithSeconds(startTime, preferredTimescale: asset.duration.timescale), end: CMTimeMakeWithSeconds(stopTime, preferredTimescale: asset.duration.timescale))
             exportSession.timeRange = range
             
             exportSession.exportAsynchronously(completionHandler: {

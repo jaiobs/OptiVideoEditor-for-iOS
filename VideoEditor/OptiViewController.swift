@@ -14,7 +14,52 @@ import Photos
 import MediaPlayer
 
 
-class ViewController: UIViewController {
+class OptiViewController: UIViewController {
+    
+    // Variable Declartion
+    var pickedFileName : String = ""
+    var selectedIndex = 0
+    var selectedRow = 0
+    var thumImg: UIImage?
+    var slctVideoUrl: URL?
+    var slctAudioUrl: URL?
+    var isloadFirstVideo = 0
+    var audioAsset: AVAsset?
+    var filterSelcted = 100
+    var assetArray = [AVAsset]()
+    var avplayer = AVPlayer()
+    var playerController = AVPlayerViewController()
+    var activeField: UITextField?
+    
+    var isMergeClicked = false
+    var isSliderEnd = true
+    
+    var cropsliderminimumValue : Double = 0.0
+    var cropslidermaximumValue : Double = 0.0
+    var mergesliderminimumValue : Double = 0.0
+    var mergeslidermaximumValue : Double = 0.0
+    var videoPlaybackPosition: CGFloat = 0.0
+    
+    var videoTotalsec = 0.0
+    var audioTotalsec = 0.0
+    var strSelectedEffect = ""
+    var strSelectedSpeed = ""
+    var strSelectedSticker = ""
+    var selectedTransitionType = -1
+    var selectedStickerPosition = -1
+    var selectedTextPosition = -1
+    
+    var timer = Timer()
+    var progress_value = 0.1
+
+    //Audio Crop view
+    var mergeSlidervw: OptiRangeSliderView!
+    
+    //Video Crop view
+//    var cropSlidervw: OptiRangeSliderView!
+    
+    //rangeSlider
+    var rangeSlider: SlickRangeSlider! = nil
     
     //MARK: IBOutlets
     @IBOutlet weak var collectnvw_Menu: UICollectionView!
@@ -28,6 +73,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var constraintparantvw_Height: NSLayoutConstraint!
     @IBOutlet weak var constraintvideovw_Height: NSLayoutConstraint!
     @IBOutlet weak var constraintmergemusicvw_height: NSLayoutConstraint!
+    @IBOutlet weak var btn_selectVideo: UIButton!
+    @IBOutlet weak var vw_selectvideo: UIView!
     
     //Effect View
     @IBOutlet weak var effect_Vw: UIView!
@@ -60,12 +107,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var vw_AddTextView: UIView!
     @IBOutlet weak var txtfld_Addtxt: UITextField!
     @IBOutlet weak var textPosition_Collvw: UICollectionView!
-   
-    //Audio Crop view
-    var mergeSlidervw: OptiRangeSliderView!
-
-    //Video Crop view
-    var cropSlidervw: OptiRangeSliderView!
+    
+    //Video Crop View
+    @IBOutlet weak var crop_Vw: UIView!
+    @IBOutlet weak var lbl_StartTime: UILabel!
+    @IBOutlet weak var lbl_EndTime: UILabel!
+    @IBOutlet weak var cropVideoimgFrame_vw: UIView!
+    @IBOutlet weak var videoFrames_Vw: UIView!
     
     // Array Declartion
     var menuItems = ["filterW","cropW","audiomergeW","speedW","textW","stickerW", "videomergeW", "transitionW"]
@@ -77,44 +125,12 @@ class ViewController: UIViewController {
     var positionItems = ["BottomLeft","BottomCenter","BottomRight","CenterLeft","Center","CenterRight","TopLeft","TopCenter","TopRight"]
     
     var transitionItems = ["Right to Left","Left to Right","Top to Bottom","Bottom to Top", "Lefttop to Rightbottom","Rightbottom to Lefttop", "Fade in/out"]
-    
-
-    // Variable Declartion
-    var pickedFileName : String = ""
-    var selectedIndex = 0
-    var selectedRow = 0
-    var thumImg: UIImage?
-    var slctVideoUrl: URL?
-    var slctAudioUrl: URL?
-    var isMergeClicked = false
-    var isloadFirstVideo = 0
-    var audioAsset: AVAsset?
-    var filterSelcted = 100
-    var assetArray = [AVAsset]()
-    var avplayer = AVPlayer()
-    var playerController = AVPlayerViewController()
-    var activeField: UITextField?
-
-    var cropsliderminimumValue : Double = 0.0
-    var cropslidermaximumValue : Double = 0.0
-    var mergesliderminimumValue : Double = 0.0
-    var mergeslidermaximumValue : Double = 0.0
-    
-    var videoTotalsec = 0.0
-    var audioTotalsec = 0.0
-    var strSelectedEffect = ""
-    var strSelectedSpeed = ""
-    var strSelectedSticker = ""
-    var selectedTransitionType = -1
-    var selectedStickerPosition = -1
-    var selectedTextPosition = -1
-    
-    var timer = Timer()
-    var progress_value = 0.1
 
     //Mark: ViewController Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.setTitle("Marvel Editor", andImage: UIImage(named: "logo")!)
         
         //Collection view Cell NIB Identifier
         collectnvw_Menu.register(UINib(nibName: OptiConstant().CMenuCell, bundle: Bundle.main), forCellWithReuseIdentifier: OptiConstant().CMenuCell)
@@ -134,12 +150,14 @@ class ViewController: UIViewController {
         self.merge_Musicbacvw.isHidden = true
         self.progressvw_back.isHidden = true
         self.progress_Vw.progress = 0.0
-
-        self.setupVideoCropSliderView()
+        if self.slctVideoUrl == nil {
+            self.btn_selectVideo.isHidden = false
+            self.vw_selectvideo.isHidden = true
+        }
         self.setupAudioCropSliderView()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OptiViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(OptiViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
     }
     
@@ -176,35 +194,14 @@ class ViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector:#selector(updateProgressValue), userInfo: nil, repeats: true)
     }
     
-    //MARK: Setup Silider for Crop
-    func setupVideoCropSliderView()  {
-        if self.cropSlidervw == nil {
-            self.cropSlidervw = OptiRangeSliderView(frame: CGRect(x: 20, y: self.menu_Vw.bounds.height/2 - 20 ,width: self.vw_function.frame.size.width - 40,height: 40))
-            self.cropSlidervw.delegate = self
-            self.cropSlidervw.tag = 1
-            self.cropSlidervw.thumbTintColor = UIColor.white
-            self.cropSlidervw.trackHighlightTintColor = UIColor.white.withAlphaComponent(0.8)
-            self.cropSlidervw.trackTintColor = UIColor.white.withAlphaComponent(0.3)
-            self.cropSlidervw.thumbBorderColor = UIColor.clear
-            self.cropSlidervw.lowerValue = 0.0
-            self.cropSlidervw.upperValue = videoTotalsec
-            self.cropSlidervw.stepValue = 5
-            self.cropSlidervw.gapBetweenThumbs = 5
-            self.cropSlidervw.thumbLabelStyle = .FOLLOW
-            self.cropSlidervw.lowerDisplayStringFormat = "%.0f"
-            self.cropSlidervw.upperDisplayStringFormat = "%.0f"
-            self.cropSlidervw.sizeToFit()
-            self.vw_function.addSubview(self.cropSlidervw)
-            self.cropSlidervw.isHidden = true
-        }
-    }
+
     func setupAudioCropSliderView()  {
         if self.mergeSlidervw == nil {
             self.mergeSlidervw = OptiRangeSliderView(frame: CGRect(x: 20, y: -15 ,width: self.mergeSliderView.frame.size.width - 40,height: self.mergeSliderView.frame.size.height))
             self.mergeSlidervw.delegate = self
             self.mergeSlidervw.tag = 2
             self.mergeSlidervw.thumbTintColor = UIColor.lightGray
-            self.mergeSlidervw.trackHighlightTintColor = UIColor.black
+            self.mergeSlidervw.trackHighlightTintColor = UIColor.darkGray
             self.mergeSlidervw.lowerLabel?.textColor = UIColor.lightGray
             self.mergeSlidervw.upperLabel?.textColor = UIColor.lightGray
             self.mergeSlidervw.trackTintColor = UIColor.lightGray
@@ -232,7 +229,88 @@ class ViewController: UIViewController {
         self.avplayer.play()
     }
     
+    //Create range slider
+    func createRangeSlider() {
+ 
+      //  Remove slider if already present
+        let subViews = self.cropVideoimgFrame_vw.subviews
+        for subview in subViews{
+            if subview.tag == 1000 {
+                subview.removeFromSuperview()
+            }
+        }
+        rangeSlider =  SlickRangeSlider(frame: CGRect(x: 0, y:  10 ,width: self.cropVideoimgFrame_vw.frame.size.width,height: self.cropVideoimgFrame_vw.frame.size.height))//SlickRangeSlider(frame: cropVideoimgFrame_vw.bounds)
+        cropVideoimgFrame_vw.addSubview(rangeSlider)
+        rangeSlider.tag = 1000
+
+        //Range slider action
+        rangeSlider.addTarget(self, action: #selector(rangeSliderValueChanged(_:)), for: .valueChanged)
+
+        let time = DispatchTime.now() + Double(Int64(NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: time) {
+            self.rangeSlider.trackHighlightTintColor = UIColor.clear
+            self.rangeSlider.curvaceousness = 1.0
+        }
+    }
     
+    func showCropviewAfterVideoisPicked() {
+     
+        if let videourl = self.slctVideoUrl {
+            self.createImageFramesforCrop(strUrl: videourl)
+            self.crop_Vw.isHidden = false
+        }
+        isSliderEnd = true
+        if videoTotalsec < 60 {
+            lbl_StartTime.text = "\(0.0)s"
+            lbl_EndTime.text   = String(format: "%.2fs",(videoTotalsec))
+        }else {
+            lbl_StartTime.text = "\(0.0)m"
+            lbl_EndTime.text   = String(format: "%.2fm",(videoTotalsec/60))
+        }
+        self.createRangeSlider()
+    }
+    
+    //Seek video when slide
+    func seekVideo(toPos pos: CGFloat) {
+        self.videoPlaybackPosition = pos
+        let time: CMTime = CMTimeMakeWithSeconds(Float64(self.videoPlaybackPosition), preferredTimescale: self.avplayer.currentTime().timescale)
+        self.avplayer.seek(to: time, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        if(pos == CGFloat(videoTotalsec))
+        {
+            self.avplayer.pause()
+        }
+    }
+    func galleryViewAction() {
+        self.avplayer.pause()
+        let videoPickerController = UIImagePickerController()
+        videoPickerController.delegate = self
+        videoPickerController.transitioningDelegate = self
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) == false { return }
+        videoPickerController.allowsEditing = true
+        videoPickerController.sourceType = .photoLibrary
+        videoPickerController.videoMaximumDuration = TimeInterval(240.0)
+        videoPickerController.mediaTypes = [kUTTypeMovie as String]
+        videoPickerController.modalPresentationStyle = .custom
+        self.present(videoPickerController, animated: true, completion: nil)
+    }
+    func cameraViewAction() {
+        self.avplayer.pause()
+        let videoPickerController = UIImagePickerController()
+        videoPickerController.delegate = self
+        if UIImagePickerController.isSourceTypeAvailable(.camera) == false {
+            DispatchQueue.main.async {
+                OptiToast.showNegativeMessage(message: OptiConstant().cameranotavailable)
+            }
+            return
+        }
+        videoPickerController.allowsEditing = true
+        videoPickerController.sourceType = .camera
+        videoPickerController.mediaTypes = [kUTTypeMovie as String]
+        videoPickerController.videoMaximumDuration = TimeInterval(240.0)
+        videoPickerController.cameraCaptureMode = .video
+        videoPickerController.modalPresentationStyle = .fullScreen
+        self.present(videoPickerController, animated: true, completion: nil)
+    }
     
     //MARK: Objc method Actions
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -257,6 +335,36 @@ class ViewController: UIViewController {
             }
         }
     }
+    //MARK: rangeSlider Delegate
+    @objc func rangeSliderValueChanged(_ rangeSlider: OptiRangeSlider) {
+        self.avplayer.pause()
+        if(isSliderEnd == true)
+        {
+            if  self.slctVideoUrl != nil {
+                rangeSlider.minimumValue = 0.0
+                rangeSlider.maximumValue = videoTotalsec
+                rangeSlider.upperValue = videoTotalsec
+            }
+            isSliderEnd = !isSliderEnd
+        }
+//        print("rangeSlider.lowerValue", rangeSlider.lowerValue)
+//        print("rangeSlider.upperValue", rangeSlider.upperValue)
+        if rangeSlider.upperValue < 60 {
+            self.lbl_StartTime.text = String(format: "%.2fs",(rangeSlider.lowerValue))
+            self.lbl_EndTime.text   = String(format: "%.2fs",(rangeSlider.upperValue))
+        } else {
+            self.lbl_StartTime.text = String(format: "%.2fm",(rangeSlider.lowerValue/60))
+            self.lbl_EndTime.text   = String(format: "%.2fm",(rangeSlider.upperValue/60))
+        }
+        self.cropsliderminimumValue = rangeSlider.lowerValue
+        self.cropslidermaximumValue = rangeSlider.upperValue
+        if(rangeSlider.lowerLayerSelected)
+        {
+            self.seekVideo(toPos: CGFloat(rangeSlider.lowerValue))
+        }else{
+            self.seekVideo(toPos: CGFloat(rangeSlider.upperValue))
+        }
+    }
     
     @objc func saveActionforEditedVideo() {
         DispatchQueue.main.async {
@@ -268,6 +376,8 @@ class ViewController: UIViewController {
                         OptiVideoEditor().save(videoUrl: videourl, toAlbum: "Video Editor", completionHandler: { (saved, error) in
                             DispatchQueue.main.async {
                                 if saved {
+                                    let saveBarBtnItm = UIBarButtonItem(title: "", style: .done, target: self, action: nil)
+                                    self.navigationItem.rightBarButtonItem  = saveBarBtnItm
                                     OptiToast.showPositiveMessage(message: OptiConstant().videosaved)
                                 }else {
                                     OptiToast.showNegativeMessage(message: error?.localizedDescription ?? "")
@@ -279,6 +389,8 @@ class ViewController: UIViewController {
                             OptiVideoEditor().save(videoUrl: videourl, toAlbum: "Video Editor", completionHandler: { (saved, error) in
                                 DispatchQueue.main.async {
                                     if saved {
+                                        let saveBarBtnItm = UIBarButtonItem(title: "", style: .done, target: self, action: nil)
+                                        self.navigationItem.rightBarButtonItem  = saveBarBtnItm
                                         OptiToast.showPositiveMessage(message: OptiConstant().videosaved)
                                     }else {
                                         OptiToast.showNegativeMessage(message: error?.localizedDescription ?? "")
@@ -307,34 +419,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func gallerybtn_Action(_ sender: UIButton) {
-        self.avplayer.pause()
-        let videoPickerController = UIImagePickerController()
-        videoPickerController.delegate = self
-        videoPickerController.transitioningDelegate = self
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) == false { return }
-        videoPickerController.allowsEditing = true
-        videoPickerController.sourceType = .photoLibrary
-        videoPickerController.mediaTypes = [kUTTypeMovie as String]
-        videoPickerController.modalPresentationStyle = .custom
-        self.present(videoPickerController, animated: true, completion: nil)
+        self.galleryViewAction()
     }
     
     @IBAction func camerabtn_Action(_ sender: UIButton) {
-        self.avplayer.pause()
-        let videoPickerController = UIImagePickerController()
-        videoPickerController.delegate = self
-        if UIImagePickerController.isSourceTypeAvailable(.camera) == false {
-            DispatchQueue.main.async {
-                OptiToast.showNegativeMessage(message: OptiConstant().cameranotavailable)
-            }
-            return
-        }
-        videoPickerController.allowsEditing = true
-        videoPickerController.sourceType = .camera
-        videoPickerController.mediaTypes = [kUTTypeMovie as String]
-        videoPickerController.cameraCaptureMode = .video
-        videoPickerController.modalPresentationStyle = .fullScreen
-        self.present(videoPickerController, animated: true, completion: nil)
+        self.cameraViewAction()
     }
     
     @IBAction func functionclosebtn_Action(_ sender: UIButton) {
@@ -351,6 +440,18 @@ class ViewController: UIViewController {
                         self.vw_function.layoutIfNeeded()
         }, completion: nil)
         
+    }
+    @IBAction func btnAction_SelectVideo(_ sender: UIButton) {
+        self.vw_selectvideo.isHidden = false
+    }
+    @IBAction func btnClose_Action(_ sender: UIButton) {
+        self.vw_selectvideo.isHidden = true
+    }
+    @IBAction func btnAction_SelectVideofrmGallery(_ sender: UIButton) {
+        self.galleryViewAction()
+    }
+    @IBAction func btnAction_RecordVideo(_ sender: UIButton) {
+        self.cameraViewAction()
     }
     
     @IBAction func tickbtn_Action(_ sender: UIButton) {
@@ -524,7 +625,7 @@ class ViewController: UIViewController {
                     
                 }
                 
-            } else if self.cropSlidervw.isHidden == false {
+            } else if self.crop_Vw.isHidden == false {
                 self.avplayer.pause()
                 if let videourl = self.slctVideoUrl {
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
@@ -534,12 +635,16 @@ class ViewController: UIViewController {
                     self.progressvw_back.isHidden = false
                     self.progress_Vw.progress = 0.1
                     self.setTimer()
-                    OptiVideoEditor().trimVideo(sourceURL: videourl, startTime:cropsliderminimumValue , endTime: cropslidermaximumValue, success: { (url) in
+                    OptiVideoEditor().trimVideo(sourceURL: videourl, startTime:cropsliderminimumValue, endTime: cropslidermaximumValue, success: { (url) in
                         DispatchQueue.main.async {
                             let saveBarBtnItm = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(self.saveActionforEditedVideo))
                             self.navigationItem.rightBarButtonItem  = saveBarBtnItm
                             self.progress_Vw.progress = 1.0
                             self.slctVideoUrl = url
+                            let asset = AVAsset(url: url)
+                            let duration = asset.duration
+                            let durationTime = CMTimeGetSeconds(duration)
+                            self.videoTotalsec = durationTime
                             self.addVideoPlayer(videoUrl: url, to: self.video_vw)
                             self.progressvw_back.isHidden = true
                         }
@@ -651,7 +756,7 @@ class ViewController: UIViewController {
 }
 
 //MARK : UIImagePicker Delegate
-extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
+extension OptiViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -674,21 +779,27 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
                 }
                 
             } else {
+                self.btn_selectVideo.isHidden = true
+                self.vw_selectvideo.isHidden = true
                 let asset = AVAsset(url: videourl)
                 let duration = asset.duration
                 let durationTime = CMTimeGetSeconds(duration)
-                if (durationTime / 60) < 4.0 {
-                    self.slctVideoUrl = videoURL
-                    self.thumImg = OptiVideoEditor().generateThumbnail(path: videourl)
-                    videoTotalsec = durationTime
-                    self.addVideoPlayer(videoUrl: videourl, to: video_vw)
-                    self.cropSlidervw.maximumValue = self.videoTotalsec
-                    self.cropSlidervw.upperValue = self.videoTotalsec
-                }else{
-                    DispatchQueue.main.async {
-                        OptiToast.showNegativeMessage(message: OptiConstant().withinthree)
-                    }
-                }
+                self.videoTotalsec = durationTime
+                self.slctVideoUrl = videoURL
+                self.thumImg = OptiVideoEditor().generateThumbnail(path: videourl)
+                self.addVideoPlayer(videoUrl: videourl, to: video_vw)
+//                if (durationTime / 60) < 4.0 {
+//                    self.slctVideoUrl = videoURL
+//                    self.thumImg = OptiVideoEditor().generateThumbnail(path: videourl)
+//                    self.addVideoPlayer(videoUrl: videourl, to: video_vw)
+//                    self.cropSlidervw.maximumValue = self.videoTotalsec
+//                    self.cropSlidervw.upperValue = self.videoTotalsec
+//                }else{
+//                    DispatchQueue.main.async {
+//                        self.showCropviewAfterVideoisPicked()
+//                        OptiToast.showNegativeMessage(message: OptiConstant().withinthree)
+//                    }
+//                }
                 
             }
             
@@ -696,7 +807,7 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
     }
 }
 //MARK : UICollectionview Delegate & Datasource
-extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension OptiViewController : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -886,7 +997,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegateF
         
     }
 }
-extension ViewController : UICollectionViewDelegate {
+extension OptiViewController : UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -905,7 +1016,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.sticker_Vw.isHidden = true
                         self.mergeView.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         self.effect_CollVw.reloadData()
@@ -923,13 +1034,14 @@ extension ViewController : UICollectionViewDelegate {
                 case 1:
                     // crop Video
                     if (self.slctVideoUrl != nil) {
+                        self.showCropviewAfterVideoisPicked()
                         self.avplayer.pause()
                         self.mergeView.isHidden = true
                         self.effect_Vw.isHidden = true
                         self.speed_Vw.isHidden = true
                         self.sticker_Vw.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = false
+                        self.crop_Vw.isHidden = false
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
@@ -951,7 +1063,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.speed_Vw.isHidden = true
                         self.sticker_Vw.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = false
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
@@ -973,7 +1085,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.sticker_Vw.isHidden = true
                         self.mergeView.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         self.speed_Collvw.reloadData()
@@ -996,7 +1108,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.speed_Vw.isHidden = true
                         self.mergeView.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = false
                         self.merge_Musicbacvw.isHidden = true
                         self.textPosition_Collvw.reloadData()
@@ -1019,7 +1131,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.speed_Vw.isHidden = true
                         self.mergeView.isHidden = true
                         self.transition_Vw.isHidden = true
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         self.sticker_Collvw.reloadData()
@@ -1043,7 +1155,7 @@ extension ViewController : UICollectionViewDelegate {
                     self.speed_Vw.isHidden = true
                     self.mergeView.isHidden = false
                     self.transition_Vw.isHidden = true
-                    self.cropSlidervw.isHidden = true
+                    self.crop_Vw.isHidden = true
                     self.vw_AddTextView.isHidden = true
                     self.merge_Musicbacvw.isHidden = true
                     self.mergeFirst.setBackgroundImage(UIImage(named: ""), for: .normal)
@@ -1067,7 +1179,7 @@ extension ViewController : UICollectionViewDelegate {
                         self.speed_Vw.isHidden = true
                         self.mergeView.isHidden = true
                         self.transition_Vw.isHidden = false
-                        self.cropSlidervw.isHidden = true
+                        self.crop_Vw.isHidden = true
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         self.transition_Collvw.reloadData()
@@ -1136,7 +1248,7 @@ extension ViewController : UICollectionViewDelegate {
 }
 
 
-extension ViewController: MPMediaPickerControllerDelegate {
+extension OptiViewController: MPMediaPickerControllerDelegate {
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         dismiss(animated: true) {
             let selectedSongs = mediaItemCollection.items
@@ -1153,13 +1265,10 @@ extension ViewController: MPMediaPickerControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
-extension ViewController : OptiRangeSliderViewDelegate {
+extension OptiViewController : OptiRangeSliderViewDelegate {
     
     func sliderValueChanged(slider: OptiRangeSlider?,slidervw : OptiRangeSliderView) {
         switch slidervw.tag {
-        case 1:
-            cropsliderminimumValue = slider?.lowerValue ?? 0.0
-            cropslidermaximumValue = slider?.upperValue ?? 0.0
         case 2:
             mergesliderminimumValue = slider?.lowerValue ?? 0.0
             mergeslidermaximumValue = slider?.upperValue ?? 0.0
@@ -1169,7 +1278,7 @@ extension ViewController : OptiRangeSliderViewDelegate {
         
     }
 }
-extension ViewController : UITextFieldDelegate {
+extension OptiViewController : UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField){
         activeField = textField
@@ -1203,7 +1312,7 @@ extension ViewController : UITextFieldDelegate {
 }
 
 
-extension ViewController : UIDocumentPickerDelegate {
+extension OptiViewController : UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         if controller.documentPickerMode == UIDocumentPickerMode.import {
             if(urls.count > 0) {
@@ -1214,9 +1323,57 @@ extension ViewController : UIDocumentPickerDelegate {
                 txtAudioLbl.text = self.pickedFileName
                 self.mergeSlidervw.maximumValue = self.audioTotalsec
                 self.mergeSlidervw.upperValue = self.audioTotalsec
-//                self.mergeSlidervw.minimumValue = 0.0
-//                self.mergeSlidervw.lowerValue = 0.0
+                self.mergesliderminimumValue = 0.0
+                self.mergeslidermaximumValue = self.audioTotalsec
             }
         }
+    }
+}
+extension OptiViewController {
+    //MARK: Create video Image Frames
+    func createImageFramesforCrop(strUrl : URL) {
+        
+        //Avsset creation
+        let asset = AVAsset(url: strUrl)
+        
+        //creating assets
+        let assetImgGenerate : AVAssetImageGenerator    = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        assetImgGenerate.requestedTimeToleranceAfter    = CMTime.zero
+        assetImgGenerate.requestedTimeToleranceBefore   = CMTime.zero
+        
+        
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        let thumbTime: CMTime = asset.duration
+        let thumbtimeSeconds  = Int(CMTimeGetSeconds(thumbTime))
+        let maxLength         = "\(thumbtimeSeconds)" as NSString
+        
+        let thumbAvg  = thumbtimeSeconds/6
+        var startTime = 1
+        var startXPosition:CGFloat = 0.0
+        
+        //loop for 6 number of frames
+        for _ in 0...5
+        {
+            
+            let imageButton = UIButton()
+            let xPositionForEach = CGFloat(self.videoFrames_Vw.frame.width)/6
+            imageButton.frame = CGRect(x: CGFloat(startXPosition), y: CGFloat(0), width: xPositionForEach, height: CGFloat(self.videoFrames_Vw.frame.height))
+            do {
+                let time:CMTime = CMTimeMakeWithSeconds(Float64(startTime),preferredTimescale: Int32(maxLength.length))
+                let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
+                let image = UIImage(cgImage: img)
+                imageButton.setImage(image, for: .normal)
+            }
+            catch _ as NSError
+            {
+            }
+            
+            startXPosition = startXPosition + xPositionForEach
+            startTime = startTime + thumbAvg
+            imageButton.isUserInteractionEnabled = false
+            self.videoFrames_Vw.addSubview(imageButton)
+        }
+        
     }
 }

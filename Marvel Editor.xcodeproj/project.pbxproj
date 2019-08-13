@@ -18,6 +18,7 @@
 		6C8C8C4822C23061003E648E /* OptiVideoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4722C23061003E648E /* OptiVideoEditor.swift */; };
 		6C8C8C4D22C25D10003E648E /* EffectCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4B22C25D10003E648E /* EffectCollectionCell.swift */; };
 		6C8C8C4E22C25D10003E648E /* EffectCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C8C8C4C22C25D10003E648E /* EffectCollectionCell.xib */; };
+		6C924AF4230165A100658FE3 /* OptiSlickSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C924AF3230165A100658FE3 /* OptiSlickSlider.swift */; };
 		6C962C2422BA195300492712 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C962C2322BA195300492712 /* AVFoundation.framework */; };
 		6C9630E922F3FF7100BF3C7D /* OptiToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9630E822F3FF7100BF3C7D /* OptiToast.swift */; };
 		6C9DCBE422C34F9F00890F6D /* SpeedCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9DCBE222C34F9F00890F6D /* SpeedCollectionCell.swift */; };
@@ -35,7 +36,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		58105A3A2254C43F00145032 /* VideoEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		58105A3A2254C43F00145032 /* Marvel Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Marvel Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58105A3D2254C43F00145032 /* OptiAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiAppDelegate.swift; sourceTree = "<group>"; };
 		58105A3F2254C43F00145032 /* OptiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiViewController.swift; sourceTree = "<group>"; };
 		58105A422254C43F00145032 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -48,6 +49,7 @@
 		6C8C8C4722C23061003E648E /* OptiVideoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiVideoEditor.swift; sourceTree = "<group>"; };
 		6C8C8C4B22C25D10003E648E /* EffectCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectCollectionCell.swift; sourceTree = "<group>"; };
 		6C8C8C4C22C25D10003E648E /* EffectCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EffectCollectionCell.xib; sourceTree = "<group>"; };
+		6C924AF3230165A100658FE3 /* OptiSlickSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiSlickSlider.swift; sourceTree = "<group>"; };
 		6C962C2322BA195300492712 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6C9630E822F3FF7100BF3C7D /* OptiToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptiToast.swift; sourceTree = "<group>"; };
 		6C9DCBE222C34F9F00890F6D /* SpeedCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedCollectionCell.swift; sourceTree = "<group>"; };
@@ -89,7 +91,7 @@
 		58105A3B2254C43F00145032 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				58105A3A2254C43F00145032 /* VideoEditor.app */,
+				58105A3A2254C43F00145032 /* Marvel Editor.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -177,6 +179,7 @@
 			children = (
 				6CB1032022BB943D00E9237A /* OptiRangeSlider.swift */,
 				6CB1032122BB943E00E9237A /* OptiRangeSliderView.swift */,
+				6C924AF3230165A100658FE3 /* OptiSlickSlider.swift */,
 			);
 			path = "Custome Slider";
 			sourceTree = "<group>";
@@ -193,9 +196,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58105A392254C43F00145032 /* VideoEditor */ = {
+		58105A392254C43F00145032 /* Marvel Editor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58105A4C2254C45000145032 /* Build configuration list for PBXNativeTarget "VideoEditor" */;
+			buildConfigurationList = 58105A4C2254C45000145032 /* Build configuration list for PBXNativeTarget "Marvel Editor" */;
 			buildPhases = (
 				58105A362254C43F00145032 /* Sources */,
 				58105A372254C43F00145032 /* Frameworks */,
@@ -205,9 +208,9 @@
 			);
 			dependencies = (
 			);
-			name = VideoEditor;
+			name = "Marvel Editor";
 			productName = VideoEditing;
-			productReference = 58105A3A2254C43F00145032 /* VideoEditor.app */;
+			productReference = 58105A3A2254C43F00145032 /* Marvel Editor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -225,7 +228,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58105A352254C43F00145032 /* Build configuration list for PBXProject "VideoEditor" */;
+			buildConfigurationList = 58105A352254C43F00145032 /* Build configuration list for PBXProject "Marvel Editor" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -238,7 +241,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58105A392254C43F00145032 /* VideoEditor */,
+				58105A392254C43F00145032 /* Marvel Editor */,
 			);
 		};
 /* End PBXProject section */
@@ -272,6 +275,7 @@
 				6C9630E922F3FF7100BF3C7D /* OptiToast.swift in Sources */,
 				6C9DCBE422C34F9F00890F6D /* SpeedCollectionCell.swift in Sources */,
 				6C9F49BB22C21B480054802A /* OptiDesignable.swift in Sources */,
+				6C924AF4230165A100658FE3 /* OptiSlickSlider.swift in Sources */,
 				6C8C8C4D22C25D10003E648E /* EffectCollectionCell.swift in Sources */,
 				6C8C8C3F22C228A5003E648E /* OptiConstant.swift in Sources */,
 				6CB1032222BB943E00E9237A /* OptiRangeSlider.swift in Sources */,
@@ -338,7 +342,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jayakumar Radhakrishnan (P6KZGL2R5Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -401,7 +405,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jayakumar Radhakrishnan (P6KZGL2R5Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -430,7 +434,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jayakumar Radhakrishnan (P6KZGL2R5Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J8G8DUU33R;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoEditor/Info.plist";
@@ -443,7 +447,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = VideoEditor_development_profile;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -451,7 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jayakumar Radhakrishnan (P6KZGL2R5Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J8G8DUU33R;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoEditor/Info.plist";
@@ -464,14 +468,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = VideoEditor_development_profile;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58105A352254C43F00145032 /* Build configuration list for PBXProject "VideoEditor" */ = {
+		58105A352254C43F00145032 /* Build configuration list for PBXProject "Marvel Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58105A4A2254C45000145032 /* Debug */,
@@ -480,7 +484,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58105A4C2254C45000145032 /* Build configuration list for PBXNativeTarget "VideoEditor" */ = {
+		58105A4C2254C45000145032 /* Build configuration list for PBXNativeTarget "Marvel Editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58105A4D2254C45000145032 /* Debug */,

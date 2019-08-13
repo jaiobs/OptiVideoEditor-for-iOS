@@ -24,8 +24,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="QV9-rd-zWB" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Adz-rz-zG3"/>
                             <constraint firstAttribute="trailing" secondItem="QV9-rd-zWB" secondAttribute="trailing" id="Oot-Kc-S5v"/>
-                            <constraint firstItem="QV9-rd-zWB" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="WWG-na-TKO"/>
                             <constraint firstAttribute="bottom" secondItem="QV9-rd-zWB" secondAttribute="bottom" id="ZOo-5d-QB2"/>
                             <constraint firstItem="QV9-rd-zWB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="gM4-lc-pWh"/>
                         </constraints>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch" width="414" height="736"/>
+        <image name="launch" width="360" height="640"/>
     </resources>
 </document>
