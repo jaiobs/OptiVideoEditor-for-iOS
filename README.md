@@ -12,16 +12,16 @@ OptiVideoEditor - This is a professional video edit app, it's an easy & practica
 
 ## Features
 
-- ##### Video trim
+- ##### Trim the video using multi adjustment slider and play on demand to see the result of output.
 
-- ##### Audio
+- ##### Merge your own music into any video file and compile it as you want. 
 
-- ##### Video merge
+- ##### Place the text content on top layer of the video and compile it. ( position : centre / bottom / top align )
 
-- ##### Slow and fast motion
+- ##### Add stickers on the video wherever you wanted to address the expressions. ( position : centre / bottom / top align ) 
 
-- ##### Video transition
+- ##### Add faster / slower the motion of the video timing. Supports from 0.25x to 1.25x speed. 
 
-- ##### Text and image
+- ##### Merging two videos with filters, etc...
 
-- ##### Filters
+- ##### Video slide transitions and slow & fast motion.
