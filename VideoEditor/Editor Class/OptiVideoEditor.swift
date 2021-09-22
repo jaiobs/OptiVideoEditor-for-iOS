@@ -572,29 +572,90 @@ class OptiVideoEditor: NSObject {
     
     func addStickerorTexttoVideo(videoUrl: URL, watermarkText text : String, imageName name : String, position : Int,  success: @escaping ((URL) -> Void), failure: @escaping ((String?) -> Void)) {
         
-        /// Asset
-        let asset = AVPlayerItem(url: videoUrl).asset
         
-        // Create an AVMutableComposition for editing
-        let mutableComposition = getVideoComposition(asset: asset)
+            
+            let asset = AVURLAsset.init(url: videoUrl)
+            
+            let composition = AVMutableComposition.init()
+            composition.addMutableTrack(withMediaType: AVMediaType.video, preferredTrackID: kCMPersistentTrackID_Invalid)
+            let clipVideoTrack = asset.tracks(withMediaType: AVMediaType.video)[0]
+            
+            // Rotate to potrait
+            let transformer = AVMutableVideoCompositionLayerInstruction(assetTrack: clipVideoTrack)
+            let videoTransform:CGAffineTransform = clipVideoTrack.preferredTransform
+            
+            
+            //fix orientation
+            var videoAssetOrientation  = UIImage.Orientation.up
+            
+            var isVideoAssetPortrait  = false
+            
+            if videoTransform.a == 0 && videoTransform.b == 1.0 && videoTransform.c == -1.0 && videoTransform.d == 0 {
+                videoAssetOrientation = UIImage.Orientation.right
+                isVideoAssetPortrait = true
+            }
+            if videoTransform.a == 0 && videoTransform.b == -1.0 && videoTransform.c == 1.0 && videoTransform.d == 0 {
+                videoAssetOrientation =  UIImage.Orientation.left
+                isVideoAssetPortrait = true
+            }
+            if videoTransform.a == 1.0 && videoTransform.b == 0 && videoTransform.c == 0 && videoTransform.d == 1.0 {
+                videoAssetOrientation =  UIImage.Orientation.up
+            }
+            if videoTransform.a == -1.0 && videoTransform.b == 0 && videoTransform.c == 0 && videoTransform.d == -1.0 {
+                videoAssetOrientation = UIImage.Orientation.down;
+            }
+            
+            
+            transformer.setTransform(clipVideoTrack.preferredTransform, at: CMTime.zero)
+            transformer.setOpacity(0.0, at: asset.duration)
+            
+            
+            
+            
+            //adjust the render size if neccessary
+            var naturalSize: CGSize
+            if(isVideoAssetPortrait){
+                naturalSize = CGSize(width: clipVideoTrack.naturalSize.height, height: clipVideoTrack.naturalSize.width)
+            } else {
+                naturalSize = clipVideoTrack.naturalSize;
+            }
+            
+            var renderWidth: CGFloat!
+            var renderHeight: CGFloat!
+            
+            renderWidth = naturalSize.width
+            renderHeight = naturalSize.height
+            
+            let parentlayer = CALayer()
+            let videoLayer = CALayer()
+            let watermarkLayer = CALayer()
+            
+            let videoComposition = AVMutableVideoComposition()
+            videoComposition.renderSize = CGSize(width: renderWidth, height: renderHeight)
+            videoComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
+            videoComposition.renderScale = 1.0
+            
+            parentlayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+            videoLayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+            parentlayer.addSublayer(videoLayer)
+            
         
-        let videoSizeone = asset.tracks(withMediaType: AVMediaType.video)[0].naturalSize
-        let videoWidth = videoSizeone.width
-        let videoHeight = videoSizeone.height
-        
-        // Create a CALayer instance and configurate it
-        let parentLayer = CALayer()
         if name != "" {
-            let stickerLayer = CALayer()
-            stickerLayer.contents = UIImage(named: name)?.cgImage
-            stickerLayer.contentsGravity = CALayerContentsGravity.resizeAspect
-            let stickerWidth = videoWidth / 6
-            let stickerX = videoWidth * CGFloat(5 * (position % 3)) / 12
-            let stickerY = videoHeight * CGFloat(position / 3) / 3
-            stickerLayer.frame = CGRect(x: stickerX, y: stickerY, width: stickerWidth, height: stickerWidth)
-            stickerLayer.opacity = 0.9
-            parentLayer.addSublayer(stickerLayer)
-        } else if text != "" {
+            let stickerView:UIView = UIView.init(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize))
+            let sticker:UIImageView = UIImageView.init()
+            sticker.image = UIImage(named: name)
+            sticker.contentMode = .scaleAspectFit        
+            let stickerWidth = renderWidth / 6
+            let stickerX = renderWidth * CGFloat(5 * (position % 3)) / 12
+            let stickerY = (renderHeight - ( renderHeight * CGFloat(position / 3) / 3)) - 150
+            sticker.frame = CGRect(x:stickerX, y: stickerY, width: stickerWidth, height: stickerWidth)
+            stickerView.addSubview(sticker)
+            watermarkLayer.contents = stickerView.asImage().cgImage
+            watermarkLayer.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: naturalSize)
+            parentlayer.addSublayer(watermarkLayer)
+        }
+        
+        if text != "" {
             let textLayer = CATextLayer()
             textLayer.string = text
             textLayer.font = UIFont(name: "Maple-Regular.otf", size: 40) ?? UIFont.systemFont(ofSize: 40)
@@ -607,77 +668,171 @@ class OptiVideoEditor: NSObject {
                 textLayer.alignmentMode = CATextLayerAlignmentMode.right
             }
             
-            let textWidth = videoWidth / 5
-            let textX = videoWidth * CGFloat(5 * (position % 3)) / 12
-            let textY = videoHeight * CGFloat(position / 3) / 3
+            let textWidth = renderWidth / 5
+            let textX = renderWidth * CGFloat(5 * (position % 3)) / 12
+            let textY = renderHeight * CGFloat(position / 3) / 3
             textLayer.frame = CGRect(x: textX , y: textY + 20, width: textWidth, height: 50)
             textLayer.opacity = 0.6
-            parentLayer.addSublayer(textLayer)
+            parentlayer.addSublayer(textLayer)
         }
-        
-        let videoTrack: AVAssetTrack = mutableComposition.tracks(withMediaType: AVMediaType.video)[0]
-        let videoSizetwo = videoTrack.naturalSize
-        
-        let videoLayer = CALayer()
-        videoLayer.frame = CGRect(x: 0, y: 0, width: videoSizetwo.width, height: videoSizetwo.height)
-        
-        let containerLayer = CALayer()
-        containerLayer.frame = CGRect(x: 0, y: 0, width: videoSizetwo.width, height: videoSizetwo.height)
-        containerLayer.addSublayer(videoLayer)
-        containerLayer.addSublayer(parentLayer)
-        
-        let layerComposition = AVMutableVideoComposition()
-        layerComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
-        layerComposition.renderSize = videoSizetwo
-        layerComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: containerLayer)
-        
-        let instruction = AVMutableVideoCompositionInstruction()
-        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: mutableComposition.duration)
-        let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
-        instruction.layerInstructions = [layerInstruction]
-        layerComposition.instructions = [instruction]
-        
-        //Create Directory path for Save
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        var outputURL = documentDirectory.appendingPathComponent("StickerVideo")
-        do {
-            try FileManager.default.createDirectory(at: outputURL, withIntermediateDirectories: true, attributes: nil)
-            outputURL = outputURL.appendingPathComponent("\(outputURL.lastPathComponent).m4v")
-        }catch let error {
-            print(error)
-        }
-        
-        //Remove existing file
-        self.deleteFile(outputURL)
-        
-        //export the video to as per your requirement conversion
-        if let exportSession = AVAssetExportSession(asset: mutableComposition, presetName: AVAssetExportPresetHighestQuality) {
-            exportSession.outputURL = outputURL
-            exportSession.outputFileType = AVFileType.mov
-            exportSession.shouldOptimizeForNetworkUse = true
-            exportSession.videoComposition = layerComposition
-            /// try to export the file and handle the status cases
-            exportSession.exportAsynchronously(completionHandler: {
-                switch exportSession.status {
+            
+            //Create Directory path for Save
+            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var outputURL = documentDirectory.appendingPathComponent("StickerVideo")
+            do {
+                try FileManager.default.createDirectory(at: outputURL, withIntermediateDirectories: true, attributes: nil)
+                outputURL = outputURL.appendingPathComponent("\(outputURL.lastPathComponent).m4v")
+            }catch let error {
+                print(error)
+            }
+            
+            //Remove existing file
+            self.deleteFile(outputURL)
+
+        // Add watermark to video
+            videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayers: [videoLayer], in: parentlayer)
+            
+            let instruction = AVMutableVideoCompositionInstruction()
+            instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: CMTimeMakeWithSeconds(60, preferredTimescale: 30))
+            
+            instruction.layerInstructions = [transformer]
+            videoComposition.instructions = [instruction]
+            
+            let exporter = AVAssetExportSession.init(asset: asset, presetName: AVAssetExportPresetHighestQuality)
+            exporter?.outputFileType = AVFileType.mov
+            exporter?.outputURL = outputURL
+            exporter?.videoComposition = videoComposition
+            
+            exporter!.exportAsynchronously(completionHandler: {() -> Void in
+                
+                switch exporter!.status {
                 case .completed :
                     success(outputURL)
                 case .failed:
-                    if let _error = exportSession.error?.localizedDescription {
+                    if let _error = exporter?.error?.localizedDescription {
                         failure(_error)
                     }
                 case .cancelled:
-                    if let _error = exportSession.error?.localizedDescription {
+                    if let _error = exporter?.error?.localizedDescription {
                         failure(_error)
                     }
                 default:
-                    if let _error = exportSession.error?.localizedDescription {
+                    if let _error = exporter?.error?.localizedDescription {
                         failure(_error)
                     }
                 }
             })
-        } else {
-            failure("video export session failed")
-        }
+            
+        
+        
+        /// Asset
+//        let asset = AVPlayerItem(url: videoUrl).asset
+//
+//        // Create an AVMutableComposition for editing
+//        let mutableComposition = getVideoComposition(asset: asset)
+//
+//        let videoSizeone = asset.tracks(withMediaType: AVMediaType.video)[0].naturalSize
+//        let videoWidth = videoSizeone.width
+//        let videoHeight = videoSizeone.height
+//
+//        // Create a CALayer instance and configurate it
+//        let parentLayer = CALayer()
+//        if name != "" {
+//            let stickerLayer = CALayer()
+//            stickerLayer.contents = UIImage(named: name)?.cgImage
+//            stickerLayer.contentsGravity = CALayerContentsGravity.resizeAspect
+//            let stickerWidth = videoWidth / 6
+//            let stickerX = videoWidth * CGFloat(5 * (position % 3)) / 12
+//            let stickerY = videoHeight * CGFloat(position / 3) / 3
+//            stickerLayer.frame = CGRect(x: stickerX, y: stickerY, width: stickerWidth, height: stickerWidth)
+//            stickerLayer.opacity = 0.9
+//            parentLayer.addSublayer(stickerLayer)
+//        } else if text != "" {
+//            let textLayer = CATextLayer()
+//            textLayer.string = text
+//            textLayer.font = UIFont(name: "Maple-Regular.otf", size: 40) ?? UIFont.systemFont(ofSize: 40)
+//
+//            if position % 3 == 0 {
+//                textLayer.alignmentMode = CATextLayerAlignmentMode.left
+//            } else if position % 3 == 1 {
+//                textLayer.alignmentMode = CATextLayerAlignmentMode.center
+//            } else {
+//                textLayer.alignmentMode = CATextLayerAlignmentMode.right
+//            }
+//
+//            let textWidth = videoWidth / 5
+//            let textX = videoWidth * CGFloat(5 * (position % 3)) / 12
+//            let textY = videoHeight * CGFloat(position / 3) / 3
+//            textLayer.frame = CGRect(x: textX , y: textY + 20, width: textWidth, height: 50)
+//            textLayer.opacity = 0.6
+//            parentLayer.addSublayer(textLayer)
+//        }
+//
+//        let videoTrack: AVAssetTrack = mutableComposition.tracks(withMediaType: AVMediaType.video)[0]
+//        let videoSizetwo = videoTrack.naturalSize
+//
+//        let videoLayer = CALayer()
+//        videoLayer.frame = CGRect(x: 0, y: 0, width: videoSizetwo.width, height: videoSizetwo.height)
+//
+//        let containerLayer = CALayer()
+//        containerLayer.frame = CGRect(x: 0, y: 0, width: videoSizetwo.width, height: videoSizetwo.height)
+//        containerLayer.addSublayer(videoLayer)
+//        containerLayer.addSublayer(parentLayer)
+//
+//        let layerComposition = AVMutableVideoComposition()
+//        layerComposition.frameDuration = CMTimeMake(value: 1, timescale: 30)
+//        layerComposition.renderSize = videoSizetwo
+//        layerComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: containerLayer)
+//
+//        let instruction = AVMutableVideoCompositionInstruction()
+//        instruction.timeRange = CMTimeRangeMake(start: CMTime.zero, duration: mutableComposition.duration)
+//        let layerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: videoTrack)
+//        layerInstruction.setTransform(videoTrack.preferredTransform, at: CMTime.zero)
+//        layerInstruction.setOpacity(0.0, at: asset.duration)
+//        instruction.layerInstructions = [layerInstruction]
+//        layerComposition.instructions = [instruction]
+//
+//        //Create Directory path for Save
+//        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        var outputURL = documentDirectory.appendingPathComponent("StickerVideo")
+//        do {
+//            try FileManager.default.createDirectory(at: outputURL, withIntermediateDirectories: true, attributes: nil)
+//            outputURL = outputURL.appendingPathComponent("\(outputURL.lastPathComponent).m4v")
+//        }catch let error {
+//            print(error)
+//        }
+//
+//        //Remove existing file
+//        self.deleteFile(outputURL)
+//
+//        //export the video to as per your requirement conversion
+//        if let exportSession = AVAssetExportSession(asset: mutableComposition, presetName: AVAssetExportPresetHighestQuality) {
+//            exportSession.outputURL = outputURL
+//            exportSession.outputFileType = AVFileType.mov
+//            exportSession.shouldOptimizeForNetworkUse = true
+//            exportSession.videoComposition = layerComposition
+//            /// try to export the file and handle the status cases
+//            exportSession.exportAsynchronously(completionHandler: {
+//                switch exportSession.status {
+//                case .completed :
+//                    success(outputURL)
+//                case .failed:
+//                    if let _error = exportSession.error?.localizedDescription {
+//                        failure(_error)
+//                    }
+//                case .cancelled:
+//                    if let _error = exportSession.error?.localizedDescription {
+//                        failure(_error)
+//                    }
+//                default:
+//                    if let _error = exportSession.error?.localizedDescription {
+//                        failure(_error)
+//                    }
+//                }
+//            })
+//        } else {
+//            failure("video export session failed")
+//        }
     }
     
     func orientationFromTransform(_ transform: CGAffineTransform) -> (orientation: UIImage.Orientation, isPortrait: Bool) {

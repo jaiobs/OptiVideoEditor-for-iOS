@@ -73,6 +73,9 @@ class OptiViewController: UIViewController {
     @IBOutlet weak var constraintparantvw_Height: NSLayoutConstraint!
     @IBOutlet weak var constraintvideovw_Height: NSLayoutConstraint!
     @IBOutlet weak var constraintmergemusicvw_height: NSLayoutConstraint!
+    @IBOutlet weak var functionViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var functionViewHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var btn_selectVideo: UIButton!
     @IBOutlet weak var vw_selectvideo: UIView!
     
@@ -320,7 +323,7 @@ class OptiViewController: UIViewController {
             self.isMergeClicked = false
         }
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+            self.functionViewTopConstraint.constant = 360
             self.vw_function.layoutIfNeeded()
         }, completion: nil)
     }
@@ -336,7 +339,7 @@ class OptiViewController: UIViewController {
         }
     }
     //MARK: rangeSlider Delegate
-    @objc func rangeSliderValueChanged(_ rangeSlider: OptiRangeSlider) {
+    @objc func rangeSliderValueChanged(_ rangeSlider: SlickRangeSlider) {
         self.avplayer.pause()
         if(isSliderEnd == true)
         {
@@ -436,7 +439,7 @@ class OptiViewController: UIViewController {
         txtfld_Addtxt.resignFirstResponder()
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],
                        animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
         }, completion: nil)
         
@@ -459,8 +462,7 @@ class OptiViewController: UIViewController {
         if isMergeClicked == true {
             self.avplayer.pause()
             if assetArray.count > 0 {
-                UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                    self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {                        self.functionViewTopConstraint.constant = 360
                     self.vw_function.layoutIfNeeded()
                 }, completion: nil)
                 self.progressvw_back.isHidden = false
@@ -494,7 +496,7 @@ class OptiViewController: UIViewController {
                 self.avplayer.pause()
                 if let videourl = slctVideoUrl {
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
                     }, completion: nil)
                     if strSelectedEffect.count > 0 {
@@ -523,7 +525,7 @@ class OptiViewController: UIViewController {
                 self.avplayer.pause()
                 if let videourl = slctVideoUrl {
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
                     }, completion: nil)
                     if strSelectedSpeed.count > 0 {
@@ -552,7 +554,7 @@ class OptiViewController: UIViewController {
                 if let videourl = self.slctVideoUrl {
                     if selectedTextPosition != -1 && txtfld_Addtxt.text != "" {
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = 360
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         self.progressvw_back.isHidden = false
@@ -590,7 +592,7 @@ class OptiViewController: UIViewController {
                 if let videourl = self.slctVideoUrl {
                     if selectedStickerPosition != -1 && strSelectedSticker != "" {
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = 360
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         self.progressvw_back.isHidden = false
@@ -629,7 +631,7 @@ class OptiViewController: UIViewController {
                 self.avplayer.pause()
                 if let videourl = self.slctVideoUrl {
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
                     }, completion: nil)
                     self.progressvw_back.isHidden = false
@@ -659,7 +661,7 @@ class OptiViewController: UIViewController {
                 self.avplayer.pause()
                 if let videourl = slctVideoUrl {
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
                         
                     }, completion: nil)
@@ -700,14 +702,14 @@ class OptiViewController: UIViewController {
         self.merge_Musicbacvw.isHidden = true
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],
                        animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = 360
                         self.vw_function.layoutIfNeeded()
         }, completion: nil)
     }
     @IBAction func btn_AudioVideoMergeSave_Action(_ sender: UIButton) {
         if let audiourl = self.slctAudioUrl {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                self.functionViewTopConstraint.constant = 360
                 self.vw_function.layoutIfNeeded()
             }, completion: nil)
             OptiVideoEditor().trimAudio(sourceURL: audiourl, startTime: mergesliderminimumValue, stopTime: mergeslidermaximumValue, success: { (audioUrl) in
@@ -1022,7 +1024,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.effect_CollVw.reloadData()
                         
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1045,7 +1047,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = true
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1067,7 +1069,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.vw_AddTextView.isHidden = true
                         self.merge_Musicbacvw.isHidden = false
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y + self.menu_Vw.bounds.height) + 360 , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = 360
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1090,7 +1092,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.merge_Musicbacvw.isHidden = true
                         self.speed_Collvw.reloadData()
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1113,7 +1115,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.merge_Musicbacvw.isHidden = true
                         self.textPosition_Collvw.reloadData()
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1136,7 +1138,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.merge_Musicbacvw.isHidden = true
                         self.sticker_Collvw.reloadData()
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1164,12 +1166,9 @@ extension OptiViewController : UICollectionViewDelegate {
                     self.mergeSecond.setTitle("+", for: .normal)
                     self.mergeSecond.setBackgroundImage(UIImage(named: ""), for: .normal)
                     UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                        self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                        self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                         self.vw_function.layoutIfNeeded()
                     }, completion: nil)
-                    //                } else {
-                    //                    OptiToast.showNegativeMessage(message: OptiConstant().slctvideomerge)
-                //                }
                 case 7:
                     // addTransitionView
                     if (self.slctVideoUrl != nil) {
@@ -1184,7 +1183,7 @@ extension OptiViewController : UICollectionViewDelegate {
                         self.merge_Musicbacvw.isHidden = true
                         self.transition_Collvw.reloadData()
                         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-                            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                             self.vw_function.layoutIfNeeded()
                         }, completion: nil)
                         
@@ -1297,7 +1296,7 @@ extension OptiViewController : UITextFieldDelegate {
     @objc func keyboardWillShow(notification: NSNotification) {
         if ((notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
             UIView.animate(withDuration: 0.5, delay: 0, options: [.curveLinear],animations: {
-                self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: (self.menu_Vw.frame.origin.y - 200) , width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+                self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
                 self.vw_function.layoutIfNeeded()
             }, completion: nil)
         }
@@ -1305,7 +1304,7 @@ extension OptiViewController : UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseIn],animations: {
-            self.vw_function.frame = CGRect(x: self.menu_Vw.frame.origin.x, y: self.menu_Vw.frame.origin.y, width: self.menu_Vw.bounds.width, height: self.menu_Vw.bounds.height)
+            self.functionViewTopConstraint.constant = self.menu_Vw.frame.height * -1
             self.vw_function.layoutIfNeeded()
         }, completion: nil)
     }
