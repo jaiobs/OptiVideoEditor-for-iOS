@@ -32,9 +32,7 @@ class OptiToast {
         label.frame = CGRect(x: appDelegate.window!.frame.size.width, y: 20, width: appDelegate.window!.frame.size.width - 3, height: 44)
         
         label.alpha = 1
-        
         appDelegate.window!.addSubview(label)
-        
         var basketTopFrame: CGRect = label.frame;
         basketTopFrame.origin.x = 0;
         
