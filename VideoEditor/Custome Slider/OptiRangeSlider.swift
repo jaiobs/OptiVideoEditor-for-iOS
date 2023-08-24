@@ -70,7 +70,6 @@ public class RangeSliderThumbLayer: CALayer {
         }
     }
     
-    
     /// draw the thumb
     ///
     /// - Parameter ctx: current graphics context
@@ -101,7 +100,6 @@ public class RangeSliderThumbLayer: CALayer {
         }
     }
 }
-
 
 /// Range slider view with upper, lower bounds
 @IBDesignable
@@ -151,7 +149,6 @@ open class OptiRangeSlider: UIControl {
         }
     }
     
-    
     /// stepValue. If set, will snap to discrete step points along the slider . Default to nil
     open var stepValue: Double? = nil {
         willSet(newValue) {
@@ -170,8 +167,6 @@ open class OptiRangeSlider: UIControl {
         }
     }
     
-    
-    
     /// minimum distance between the upper and lower thumbs.
     @IBInspectable open var gapBetweenThumbs: Double = 2.0
     
@@ -189,7 +184,6 @@ open class OptiRangeSlider: UIControl {
         }
     }
     
-    
     /// thumb tint color
     @IBInspectable open var thumbTintColor: UIColor = UIColor.white {
         didSet {
@@ -205,7 +199,6 @@ open class OptiRangeSlider: UIControl {
             upperThumbLayer.strokeColor = thumbBorderColor
         }
     }
-    
     
     /// thumb border width
     @IBInspectable open var thumbBorderWidth: CGFloat = 0.5 {
@@ -231,7 +224,6 @@ open class OptiRangeSlider: UIControl {
             upperThumbLayer.setNeedsDisplay()
         }
     }
-    
     
     /// previous touch location
     fileprivate var previouslocation = CGPoint()
